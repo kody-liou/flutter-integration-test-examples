@@ -5,23 +5,22 @@ import 'package:integration_test/integration_test.dart';
 import 'package:flutter_integration_test_examples/main.dart';
 
 void main() async {
-  
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
   WidgetsFlutterBinding.ensureInitialized();
 
   testWidgets('Smoke test', (WidgetTester tester) async {
     // Run app
-    await tester.pumpWidget(MyApp()); // Create main app
+    await tester.pumpWidget(const MyApp()); // Create main app
     await tester.pumpAndSettle(); // Finish animations and scheduled microtasks
-    await tester.pump(Duration(seconds: 2)); // Wait some time
+    await tester.pump(const Duration(seconds: 2)); // Wait some time
 
     // Enumerate all states that exist in the app just to show we can
     print("All states: ");
     tester.allStates.forEach((s) => print(s));
 
     // Find textFields
-    final Finder userText = find.byKey(ValueKey('userText'));
-    final Finder passText = find.byKey(ValueKey('passText'));
+    final Finder userText = find.byKey(const ValueKey('userText'));
+    final Finder passText = find.byKey(const ValueKey('passText'));
 
     // Ensure there is a login and password field on the initial page
     expect(userText, findsOneWidget);
@@ -31,13 +30,13 @@ void main() async {
     await tester.enterText(userText, 'test@test.com');
     await tester.enterText(passText, 'password');
     await tester.pumpAndSettle();
-    await tester.pump(Duration(seconds: 2));
+    await tester.pump(const Duration(seconds: 2));
 
     // Tap btn
-    final Finder loginBtn = find.byKey(ValueKey('loginBtn'));
+    final Finder loginBtn = find.byKey(const ValueKey('loginBtn'));
     await tester.tap(loginBtn, warnIfMissed: true);
     await tester.pumpAndSettle();
-    await tester.pump(Duration(seconds: 2));
+    await tester.pump(const Duration(seconds: 2));
 
     // Check internal state
     MyAppState state = tester.state(find.byType(MyApp));
@@ -51,7 +50,7 @@ void main() async {
       builder: (c) => _SomeDialog(),
     );
     await tester.pumpAndSettle();
-    await tester.pump(Duration(seconds: 1));
+    await tester.pump(const Duration(seconds: 1));
 
     // Close dialog, method 1
     navigator.pop();
@@ -65,17 +64,17 @@ void main() async {
     await tester.pumpAndSettle();
 
     // Close dialog, method 2
-    await tester.tap(find.byKey(ValueKey('okBtn')));
+    await tester.tap(find.byKey(const ValueKey('okBtn')));
     await tester.pumpAndSettle();
 
     // Verify dialog was closed
     expect(find.byType(_SomeDialog), findsNothing);
 
     // Expect all anims have finished
-    expect(SchedulerBinding.instance!.transientCallbackCount, 0);
+    expect(SchedulerBinding.instance.transientCallbackCount, 0);
 
     // Wait a bit more...
-    await tester.pump(Duration(seconds: 2));
+    await tester.pump(const Duration(seconds: 2));
   });
 }
 
@@ -85,9 +84,9 @@ class _SomeDialog extends StatelessWidget {
     return AlertDialog(
       actions: [
         OutlinedButton(
-          key: ValueKey("okBtn"),
+          key: const ValueKey("okBtn"),
           onPressed: () => Navigator.pop(context),
-          child: Text("Ok"),
+          child: const Text("Ok"),
         ),
       ],
     );

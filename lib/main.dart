@@ -29,10 +29,10 @@ class MyAppState extends State<MyApp> {
             if (isLoggedIn == false) {
               return Column(
                 children: [
-                  TextField(key: ValueKey("userText")),
-                  TextField(key: ValueKey("passText"), obscureText: true),
+                  const TextField(key: ValueKey("userText")),
+                  const TextField(key: ValueKey("passText"), obscureText: true),
                   OutlinedButton(
-                    key: ValueKey("loginBtn"),
+                    key: const ValueKey("loginBtn"),
                     child: const Text("Login"),
                     onPressed: () => isLoggedInState.value = true,
                   ),
